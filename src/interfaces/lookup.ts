@@ -228,7 +228,7 @@ export default {
       DealOrderAdded: '(PalletCreditcoinDealOrderId,PalletCreditcoinDealOrder)',
       DealOrderFunded: '(PalletCreditcoinDealOrderId,PalletCreditcoinDealOrder)',
       DealOrderClosed: '(PalletCreditcoinDealOrderId,PalletCreditcoinDealOrder)',
-      LoanExempted: '(PalletCreditcoinDealOrderId,H256)',
+      LoanExempted: 'PalletCreditcoinDealOrderId',
       LegacyWalletClaimed: '(AccountId32,PalletCreditcoinLegacySighash,u128)'
     }
   },
@@ -673,15 +673,19 @@ export default {
         dealOrderId: 'PalletCreditcoinDealOrderId',
         transferId: 'H256',
       },
-      register_transfer: {
+      register_funding_transfer: {
         transferKind: 'PalletCreditcoinTransferKind',
-        gain: 'U256',
-        orderId: 'PalletCreditcoinOrderId',
+        dealOrderId: 'PalletCreditcoinDealOrderId',
+        blockchainTxId: 'Bytes',
+      },
+      register_repayment_transfer: {
+        transferKind: 'PalletCreditcoinTransferKind',
+        repaymentAmount: 'U256',
+        dealOrderId: 'PalletCreditcoinDealOrderId',
         blockchainTxId: 'Bytes',
       },
       exempt: {
         dealOrderId: 'PalletCreditcoinDealOrderId',
-        transferId: 'H256',
       },
       verify_transfer: {
         transfer: 'PalletCreditcoinTransfer',

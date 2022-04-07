@@ -5,7 +5,7 @@ import type { ApiTypes } from '@polkadot/api-base/types';
 import type { Bytes, Compact, U256, Vec, bool, i64, u128, u32, u64 } from '@polkadot/types-codec';
 import type { AnyNumber, ITuple } from '@polkadot/types-codec/types';
 import type { AccountId32, Call, H256, MultiAddress, Perbill } from '@polkadot/types/interfaces/runtime';
-import type { PalletCreditcoinAskOrderId, PalletCreditcoinBidOrderId, PalletCreditcoinBlockchain, PalletCreditcoinDealOrderId, PalletCreditcoinLoanTerms, PalletCreditcoinOfferId, PalletCreditcoinOrderId, PalletCreditcoinTransfer, PalletCreditcoinTransferKind, SpCoreEcdsaPublic, SpRuntimeMultiSignature, SpRuntimeMultiSigner } from '@polkadot/types/lookup';
+import type { PalletCreditcoinAskOrderId, PalletCreditcoinBidOrderId, PalletCreditcoinBlockchain, PalletCreditcoinDealOrderId, PalletCreditcoinLoanTerms, PalletCreditcoinOfferId, PalletCreditcoinTransfer, PalletCreditcoinTransferKind, SpCoreEcdsaPublic, SpRuntimeMultiSignature, SpRuntimeMultiSigner } from '@polkadot/types/lookup';
 
 declare module '@polkadot/api-base/types/submittable' {
   export interface AugmentedSubmittables<ApiType extends ApiTypes> {
@@ -109,7 +109,7 @@ declare module '@polkadot/api-base/types/submittable' {
        **/
       claimLegacyWallet: AugmentedSubmittable<(publicKey: SpCoreEcdsaPublic | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [SpCoreEcdsaPublic]>;
       closeDealOrder: AugmentedSubmittable<(dealOrderId: PalletCreditcoinDealOrderId, transferId: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PalletCreditcoinDealOrderId, H256]>;
-      exempt: AugmentedSubmittable<(dealOrderId: PalletCreditcoinDealOrderId, transferId: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PalletCreditcoinDealOrderId, H256]>;
+      exempt: AugmentedSubmittable<(dealOrderId: PalletCreditcoinDealOrderId) => SubmittableExtrinsic<ApiType>, [PalletCreditcoinDealOrderId]>;
       fundDealOrder: AugmentedSubmittable<(dealOrderId: PalletCreditcoinDealOrderId, transferId: H256 | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PalletCreditcoinDealOrderId, H256]>;
       lockDealOrder: AugmentedSubmittable<(dealOrderId: PalletCreditcoinDealOrderId) => SubmittableExtrinsic<ApiType>, [PalletCreditcoinDealOrderId]>;
       /**
@@ -117,7 +117,8 @@ declare module '@polkadot/api-base/types/submittable' {
        **/
       registerAddress: AugmentedSubmittable<(blockchain: PalletCreditcoinBlockchain | { Ethereum: any } | { Rinkeby: any } | { Luniverse: any } | { Bitcoin: any } | { Other: any } | string | Uint8Array, address: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PalletCreditcoinBlockchain, Bytes]>;
       registerDealOrder: AugmentedSubmittable<(lenderAddressId: H256 | string | Uint8Array, borrowerAddressId: H256 | string | Uint8Array, terms: PalletCreditcoinLoanTerms | { amount?: any; interestRate?: any; maturity?: any } | string | Uint8Array, expirationBlock: u32 | AnyNumber | Uint8Array, askGuid: Bytes | string | Uint8Array, bidGuid: Bytes | string | Uint8Array, borrowerKey: SpRuntimeMultiSigner | { Ed25519: any } | { Sr25519: any } | { Ecdsa: any } | string | Uint8Array, borrowerSignature: SpRuntimeMultiSignature | { Ed25519: any } | { Sr25519: any } | { Ecdsa: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [H256, H256, PalletCreditcoinLoanTerms, u32, Bytes, Bytes, SpRuntimeMultiSigner, SpRuntimeMultiSignature]>;
-      registerTransfer: AugmentedSubmittable<(transferKind: PalletCreditcoinTransferKind | { Erc20: any } | { Ethless: any } | { Native: any } | { Other: any } | string | Uint8Array, gain: U256 | AnyNumber | Uint8Array, orderId: PalletCreditcoinOrderId | { Deal: any } | { Repayment: any } | string | Uint8Array, blockchainTxId: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PalletCreditcoinTransferKind, U256, PalletCreditcoinOrderId, Bytes]>;
+      registerFundingTransfer: AugmentedSubmittable<(transferKind: PalletCreditcoinTransferKind | { Erc20: any } | { Ethless: any } | { Native: any } | { Other: any } | string | Uint8Array, dealOrderId: PalletCreditcoinDealOrderId, blockchainTxId: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PalletCreditcoinTransferKind, PalletCreditcoinDealOrderId, Bytes]>;
+      registerRepaymentTransfer: AugmentedSubmittable<(transferKind: PalletCreditcoinTransferKind | { Erc20: any } | { Ethless: any } | { Native: any } | { Other: any } | string | Uint8Array, repaymentAmount: U256 | AnyNumber | Uint8Array, dealOrderId: PalletCreditcoinDealOrderId, blockchainTxId: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PalletCreditcoinTransferKind, U256, PalletCreditcoinDealOrderId, Bytes]>;
       verifyTransfer: AugmentedSubmittable<(transfer: PalletCreditcoinTransfer | { blockchain?: any; kind?: any; from?: any; to?: any; orderId?: any; amount?: any; tx?: any; block?: any; processed?: any; sighash?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [PalletCreditcoinTransfer]>;
       /**
        * Generic tx

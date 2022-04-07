@@ -253,7 +253,7 @@ declare module '@polkadot/types/lookup' {
     readonly isDealOrderClosed: boolean;
     readonly asDealOrderClosed: ITuple<[PalletCreditcoinDealOrderId, PalletCreditcoinDealOrder]>;
     readonly isLoanExempted: boolean;
-    readonly asLoanExempted: ITuple<[PalletCreditcoinDealOrderId, H256]>;
+    readonly asLoanExempted: PalletCreditcoinDealOrderId;
     readonly isLegacyWalletClaimed: boolean;
     readonly asLegacyWalletClaimed: ITuple<[AccountId32, PalletCreditcoinLegacySighash, u128]>;
     readonly type: 'AddressRegistered' | 'TransferRegistered' | 'TransferVerified' | 'TransferProcessed' | 'AskOrderAdded' | 'BidOrderAdded' | 'OfferAdded' | 'DealOrderAdded' | 'DealOrderFunded' | 'DealOrderClosed' | 'LoanExempted' | 'LegacyWalletClaimed';
@@ -701,17 +701,22 @@ declare module '@polkadot/types/lookup' {
       readonly dealOrderId: PalletCreditcoinDealOrderId;
       readonly transferId: H256;
     } & Struct;
-    readonly isRegisterTransfer: boolean;
-    readonly asRegisterTransfer: {
+    readonly isRegisterFundingTransfer: boolean;
+    readonly asRegisterFundingTransfer: {
       readonly transferKind: PalletCreditcoinTransferKind;
-      readonly gain: U256;
-      readonly orderId: PalletCreditcoinOrderId;
+      readonly dealOrderId: PalletCreditcoinDealOrderId;
+      readonly blockchainTxId: Bytes;
+    } & Struct;
+    readonly isRegisterRepaymentTransfer: boolean;
+    readonly asRegisterRepaymentTransfer: {
+      readonly transferKind: PalletCreditcoinTransferKind;
+      readonly repaymentAmount: U256;
+      readonly dealOrderId: PalletCreditcoinDealOrderId;
       readonly blockchainTxId: Bytes;
     } & Struct;
     readonly isExempt: boolean;
     readonly asExempt: {
       readonly dealOrderId: PalletCreditcoinDealOrderId;
-      readonly transferId: H256;
     } & Struct;
     readonly isVerifyTransfer: boolean;
     readonly asVerifyTransfer: {
@@ -721,7 +726,7 @@ declare module '@polkadot/types/lookup' {
     readonly asAddAuthority: {
       readonly who: AccountId32;
     } & Struct;
-    readonly type: 'ClaimLegacyWallet' | 'RegisterAddress' | 'AddAskOrder' | 'AddBidOrder' | 'AddOffer' | 'AddDealOrder' | 'LockDealOrder' | 'FundDealOrder' | 'RegisterDealOrder' | 'CloseDealOrder' | 'RegisterTransfer' | 'Exempt' | 'VerifyTransfer' | 'AddAuthority';
+    readonly type: 'ClaimLegacyWallet' | 'RegisterAddress' | 'AddAskOrder' | 'AddBidOrder' | 'AddOffer' | 'AddDealOrder' | 'LockDealOrder' | 'FundDealOrder' | 'RegisterDealOrder' | 'CloseDealOrder' | 'RegisterFundingTransfer' | 'RegisterRepaymentTransfer' | 'Exempt' | 'VerifyTransfer' | 'AddAuthority';
   }
 
   /** @name SpCoreEcdsaPublic (108) */

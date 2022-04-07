@@ -103,9 +103,9 @@ declare module '@polkadot/api-base/types/events' {
        * A loan exemption has been granted by a lender. This indicates that the lender
        * is releasing some or all of the outstanding debt on the loan. The borrower
        * is no longer responsible for repaying the amount.
-       * [exempted_deal_order_id, exempting_transfer_id]
+       * [exempted_deal_order_id]
        **/
-      LoanExempted: AugmentedEvent<ApiType, [PalletCreditcoinDealOrderId, H256]>;
+      LoanExempted: AugmentedEvent<ApiType, [PalletCreditcoinDealOrderId]>;
       /**
        * An offer has been added by a lender. This indicates that the lender
        * is interested in entering a loan with the owner of the bid order.
